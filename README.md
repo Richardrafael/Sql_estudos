@@ -80,3 +80,11 @@ select count(altura)  from gafanhotos where sexo = 'M' and  altura < 1.90; <br>
  select carga from cursos group by carga ; <br>
  select carga, count(nome) from cursos group by carga;  <br>
  select carga, count(nome) from cursos group by carga having count(nome) > 3; <br> 
+ select ano , count(*) from cursos group by ano having count(ano) >= 5 order by count(*) desc;<br>
+ select carga , count(*) from cursos where ano > 2015 group by carga <br>
+ having carga > (select avg (carga) from cursos );<br>
+## Exercicio 2
+select profissoes , count(*) from gafanhotos group by profissoes;<br>
+select  sexo , count(sexo) from gafanhotos where nacimento > 2005/01/01 group by sexo;<br>
+select nacionalidade , nome from where not like "Brasil" group by nacionalidade  having count<br>(nacionalidade) > 3 ;<br>
+select altura , count(*) from gafanhotos where peso > 100 having altura > (select avg(altura) from <br> gafanhotos ) group by altura 
