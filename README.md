@@ -22,7 +22,7 @@ Insert into pessoas values <br>
 Alter table pessoas add column profissao varchar(10);<br>
 Alter table pessoas drop column profissao;<br>
 Alter table pessoas add column profissao varchar(10) after nome;<br>
-Alter table pessoas add codigo int first ;<br>
+Alter table pessoas add codigo int first ;<br> 
 Alter table pessoas Modify profissao varchar(20) not null default "";<br>
 Alter table pessoas change profissao prof varchar(20);<br>
 Alter table pessoas rename to gafanhotos;<br>
@@ -88,3 +88,31 @@ select profissoes , count(*) from gafanhotos group by profissoes;<br>
 select  sexo , count(sexo) from gafanhotos where nacimento > 2005/01/01 group by sexo;<br>
 select nacionalidade , nome from where not like "Brasil" group by nacionalidade  having count<br>(nacionalidade) > 3 ;<br>
 select altura , count(*) from gafanhotos where peso > 100 having altura > (select avg(altura) from <br> gafanhotos ) group by altura 
+## Adicionando chave relacionamento 
+alter table gafanhotos add column cursospreferido int;<br>
+alter table gafanhotos add foreign key (cursospreferido)<br> 
+references curso(codigocurso);<br>
+update gafanhotos set cursopreferido = '6' where id = '1'<br>
+## Joins 
+select gafanhotos.nome , cursos.nome , cursos.ano<br>
+from gafanhotos join cursos on cursos.idcurso = gafanhotos.cursopreferido;<br> 
+select g.nome , c.nome , c.ano<br>
+from gafanhotos as g join cursos as c on c.idcurso = g.cursopreferido;<br> 
+select g.nome , c.nome , c.ano<br>
+from gafanhotos as g left join cursos as c on c.idcurso = g.cursopreferido;<br> 
+select g.nome , c.nome , c.ano<br>
+from gafanhotos as g right join cursos as c on c.idcurso = g.cursopreferido;<br> 
+## n por n 
+create table asssite (<br>
+    id int auto_increment,<br>
+    data date , <br>
+    idgafanhoto int ,<br>
+    idcurso int, <br>
+    primary key (id) ,<br>
+    foreing key (idgafanhoto ) references gafanhotos(id),<br>
+    foreing key (idcurso)  references cursos(id),<br>
+)<br>   
+select g.nome  , c.nome from  gafanhotos g join assiti a on g.id = a.idgafanhoto order by g.nome;<br>
+select g.nome  , a.idcurso from  gafanhotos g join assiti a on g.id = a.idgafanhoto<br> 
+join cursos  c on c.idcursos = a.idcurso<br>
+order by g.nome;<br>
